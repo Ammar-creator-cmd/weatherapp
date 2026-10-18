@@ -1,21 +1,39 @@
-from flask import Flask, render_template, request
-app = Flask(__name__)
+import os
+
 import requests
-API_KEY = ''
-API_URL = ('http://api.openweathermap.org/data/2.5/weather?q={}&mode=json&units=metric&appid={}')
+from dotenv import load_dotenv
+from flask import Flask, render_template, request
+
+load_dotenv()
+
+app = Flask(__name__)
+API_KEY = os.environ.get("OPENWEATHER_API_KEY")
+API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 def query_api(city):
-    print(API_URL.format(city, API_KEY))
-    data = requests.get(API_URL.format(city, API_KEY)).json()
-    return data
+    if not API_KEY:
+        raise RuntimeError("OPENWEATHER_API_KEY environment variable is not set.")
+    response = requests.get(
+        API_URL,
+        params={"q": city, "mode": "json", "units": "metric", "appid": API_KEY},
+        timeout=10,
+    )
+    response.raise_for_status()
+    return response.json()
 
 @app.route('/')
 def index():
-    city = "amsterdam"
-    resp = query_api(city)
+    resp = query_api('London')
     print(resp)
-    return render_template('index.html')
-
+    city = resp['name']
+    temp = resp['main']['temp']
+    country = resp['sys']['country']
+    weather = resp['weather'][0]['description']
+    iconcode = resp['weather'][0]['icon']
+    humidity = resp['main']['humidity']
+    feels_like = resp['main']['feels_like']
+    return render_template('index.html', city=city, temp=temp, country=country, weather=weather,
+                           iconcode=iconcode, humidity=humidity, feels_like=feels_like)
 
 if __name__ == '__main__':
     app.run(debug=True)
