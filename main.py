@@ -20,7 +20,7 @@ def query_api(city):
     )
     response.raise_for_status()
     return response.json()
-
+#
 @app.route('/')
 def index():
     resp = query_api('London')
