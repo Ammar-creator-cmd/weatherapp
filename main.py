@@ -35,5 +35,24 @@ def index():
     return render_template('index.html', city=city, temp=temp, country=country, weather=weather,
                            iconcode=iconcode, humidity=humidity, feels_like=feels_like)
 
+@app.route("/results", methods=["GET", "POST"])
+def result():
+    input_city = request.form.get("city")
+    resp = query_api(input_city)
+    error = None
+    if resp:
+        if len(resp) <= 2:
+            error = resp["message"]
+        else:
+            temp = resp["main"]["temp"]
+            city = resp["name"]
+            country = resp["sys"]["country"]
+            weather = resp["weather"][0]["description"]
+            iconcode = resp["weather"][0]["icon"]
+            humidity = resp["main"]["humidity"]
+            feels_like = resp["main"]["feels_like"]
+            return render_template( "index.html", city=city, temp=temp, country=country, weather=weather, iconcode=iconcode, humidity=humidity, feels_like=feels_like)
+
+    return render_template("index.html", error=error)
 if __name__ == '__main__':
     app.run(debug=True)
