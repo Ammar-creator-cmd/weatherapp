@@ -1,202 +1,280 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: #43AFFC;
-}
-::selection{
-  color: #fff;
-  background: #43AFFC;
-}
-.wrapper{
-  width: 400px;
-  background: #fff;
-  border-radius: 7px;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
-}
-.wrapper header{
-  display: flex;
-  font-size: 21px;
-  font-weight: 500;
-  color: #43AFFC;
-  padding: 16px 15px;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
-}
-header i{
-  font-size: 0em;
-  cursor: pointer;
-  margin-right: 8px;
-}
-.wrapper.active header i{
-  margin-left: 5px;
-  font-size: 30px;
-}
-.wrapper .input-part{
-  margin: 20px 25px 30px;
-}
-.wrapper.active .input-part{
-  display: none;
-}
-.input-part .info-txt{
-  display: none;
-  font-size: 17px;
-  text-align: center;
-  padding: 12px 10px;
-  border-radius: 7px;
-  margin-bottom: 15px;
-}
-.input-part .info-txt.error{
-  color: #721c24;
-  display: block;
-  background: #f8d7da;
-  border: 1px solid #f5c6cb;
-}
-.input-part .info-txt.pending{
-  color: #0c5460;
-  display: block;
-  background: #d1ecf1;
-  border: 1px solid #bee5eb;
-}
-.input-part :where(input, button){
-  width: 100%;
-  height: 55px;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  border-radius: 7px;
-}
-.input-part input{
-  text-align: center;
-  padding: 0 15px;
-  border: 1px solid #ccc;
-}
-.input-part input:is(:focus, :valid){
-  border: 2px solid #43AFFC;
-}
-.input-part input::placeholder{
-  color: #bfbfbf;
-}
-.input-part .separator{
-  height: 1px;
-  width: 100%;
-  margin: 25px 0;
-  background: #ccc;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.separator::before{
-  content: "or";
-  color: #b3b3b3;
-  font-size: 19px;
-  padding: 0 15px;
-  background: #fff;
-}
-.input-part button{
-  color: #fff;
-  cursor: pointer;
-  background: #43AFFC;
-  transition: 0.3s ease;
-}
-.input-part button:hover{
-  background: #1d9ffc;
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  color-scheme: light;
+  font-family: "DM Sans", sans-serif;
+  color: #172b4d;
+  background: #f2f6fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.wrapper .weather-part{
-  display: none;
-  margin: 30px 0 0;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+* {
+  box-sizing: border-box;
 }
-.wrapper.active .weather-part{
-  display: flex;
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 48px 20px;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(113, 174, 255, 0.2), transparent 38%),
+    #f2f6fc;
 }
-.weather-part img{
-  width: 50%;
-  height: auto;
+
+.weather-app {
+  width: min(100%, 720px);
+  margin: 0 auto;
 }
-.weather-part .temp{
-  display: flex;
-  font-weight: 500;
-  font-size: 72px;
+
+.app-header {
+  margin-bottom: 28px;
+  text-align: center;
 }
-.weather-part .temp .numb{
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #5375aa;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  font-family: "Manrope", sans-serif;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  letter-spacing: -0.05em;
+}
+
+.subtitle {
+  margin-bottom: 0;
+  color: #687b99;
+}
+
+.search-form,
+.forecast {
+  border: 1px solid #e5ebf4;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 16px 48px rgba(34, 63, 105, 0.08);
+}
+
+.search-form {
+  padding: 22px;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #425675;
+  font-size: 0.88rem;
   font-weight: 600;
 }
-.weather-part .temp .deg{
-  font-size: 40px;
-  display: block;
-  margin: 10px 5px 0 0;
-}
-.weather-part .weather{
-  font-size: 21px;
-  text-align: center;
-  margin: -5px 20px 15px;
-}
-.weather-part .location{
-  display: flex;
-  font-size: 20px;
-  padding: 0 20px;
-  text-align: center;
-  margin-bottom: 30px;
-  align-items: flex-start;
-}
-.location i{
-  font-size: 20px;
-  margin: 4px 5px 0 0;
-}
-.weather-part .bottom-details{
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  border-top: 1px solid #ccc;
-}
-.bottom-details .column{
-  display: flex;
-  width: 100%;
-  padding: 15px 0;
-  align-items: center;
-  justify-content: center;
-}
-.column i{
-  color: #5DBBFF;
-  font-size: 40px;
-}
-.column.humidity{
-  border-left: 1px solid #ccc;
-}
-.column .details{
-  margin-left: 3px;
-}
-.details .temp, .humidity span{
-  font-size: 18px;
-  font-weight: 500;
-  margin-top: -3px;
-}
-.details .temp .deg{
-  margin: 0;
-  font-size: 17px;
-  padding: 0 2px 0 1px;
-}
-.column .details p{
-  font-size: 14px;
-  margin-top: -6px;
-}
-.humidity i{
-  font-size: 37px;
-}
-.title{
-font-size: 60px;
 
+.search-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.search-controls input {
+  min-width: 0;
+  flex: 1;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d9e2ef;
+  border-radius: 10px;
+  color: #172b4d;
+  font: inherit;
+}
+
+.search-controls input:focus {
+  border-color: #3977d5;
+  outline: 3px solid rgba(57, 119, 213, 0.16);
+}
+
+.search-controls button {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  background: #2868c7;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.search-controls button:hover {
+  transform: translateY(-1px);
+  background: #1f56a6;
+}
+
+.search-controls button:focus-visible {
+  outline: 3px solid rgba(40, 104, 199, 0.35);
+  outline-offset: 3px;
+}
+
+.message {
+  margin: 16px 0 0;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+}
+
+.error {
+  border: 1px solid #f0c7c8;
+  background: #fff1f1;
+  color: #9c3035;
+}
+
+.forecast {
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.current-weather {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 32px;
+  background: linear-gradient(120deg, #fff 25%, #edf5ff 100%);
+}
+
+.current-weather h2 {
+  margin-bottom: 6px;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  letter-spacing: -0.04em;
+}
+
+.condition {
+  margin-bottom: 0;
+  color: #687b99;
+  text-transform: capitalize;
+}
+
+.temperature {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.temperature img {
+  width: 88px;
+  height: 88px;
+}
+
+.temperature p {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2.5rem, 8vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  white-space: nowrap;
+}
+
+.temperature p span {
+  margin-left: 2px;
+  color: #687b99;
+  font-size: 0.48em;
+  vertical-align: top;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #e8edf5;
+}
+
+.detail {
+  display: flex;
+  min-height: 86px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 15px 22px;
+}
+
+.detail:not(:nth-child(3n)) {
+  border-right: 1px solid #e8edf5;
+}
+
+.detail:nth-child(n + 4) {
+  border-top: 1px solid #e8edf5;
+}
+
+.detail-label {
+  color: #71819b;
+  font-size: 0.78rem;
+}
+
+.detail-value {
+  overflow-wrap: anywhere;
+  color: #263c5e;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+@media (max-width: 540px) {
+  body {
+    padding: 32px 14px;
+  }
+
+  .search-form {
+    padding: 17px;
+  }
+
+  .search-controls {
+    flex-direction: column;
+  }
+
+  .current-weather {
+    align-items: flex-start;
+    padding: 22px 18px;
+  }
+
+  .temperature {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .temperature img {
+    width: 66px;
+    height: 66px;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail:not(:nth-child(3n)) {
+    border-right: 0;
+  }
+
+  .detail:nth-child(n + 3) {
+    border-top: 1px solid #e8edf5;
+  }
+
+  .detail:nth-child(odd) {
+    border-right: 1px solid #e8edf5;
+  }
+
+  .detail {
+    padding: 14px;
+  }
 }

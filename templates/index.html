@@ -2,39 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weather App </title>
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
 </head>
-<body><div class="wrapper">
-      <header><i class='bx bx-left-arrow-alt'></i>Weather App</header>
-      <section class="input-part">
-        <p class="info-txt"></p>
-          <div class="content">
-          <form method="post" action="/results">
-          <input type="text" name ="city" spellcheck="false" placeholder="Enter city name" required>
-              <br> <br>
-          <button>Get Weather</button>
-          {{error}}
-            </form>
+<body>
+<main class="weather-app">
+    <header class="app-header">
+        <p class="eyebrow">LOCAL FORECAST</p>
+        <h1>Weather at a glance</h1>
+        <p class="subtitle">Find current conditions for any city.</p>
+    </header>
 
-
-
-</section></div>
-
-<section class="weather-part">
-        <img src="http://openweathermap.org/img/wn/{{iconcode}}.png" alt="Weather Icon">
-        <div class="temp">
-          <span class="numb">{{temp}}</span>
-          <span class="deg">°</span>C
+    <form class="search-form" method="post" action="{{ url_for('result') }}">
+        <label for="city">City</label>
+        <div class="search-controls">
+            <input id="city" type="text" name="city" placeholder="e.g. London"
+                   value="{{ searched_city|default('') }}" required>
+            <button type="submit">Get weather</button>
         </div>
-    <div class="weather">{{weather}}</div>
-        <div class = "location">
-         <i class = "bx bx-map"></i>
-         <span>{{city}}, {{country}}</span>
+    </form>
+
+    {% if error %}
+    <p class="message error" role="alert">{{ error }}</p>
+    {% endif %}
+
+    {% if city is defined %}
+    <section class="forecast" aria-label="Current weather for {{ city }}">
+        <div class="current-weather">
+            <div>
+                <p class="eyebrow">CURRENT CONDITIONS</p>
+                <h2>{{ city }}{% if country %}, {{ country }}{% endif %}</h2>
+                <p class="condition">{{ weather|capitalize }}</p>
+            </div>
+            <div class="temperature">
+                <img src="https://openweathermap.org/img/wn/{{ iconcode }}@2x.png"
+                     alt="{{ weather|capitalize }}" width="100" height="100">
+                <p>{{ temp|round|int }}<span>°C</span></p>
+            </div>
         </div>
-</section>
-<script src="script.js"></script>
+
+        <div class="details-grid">
+            <div class="detail">
+                <span class="detail-label">Feels like</span>
+                <span class="detail-value">{{ feels_like|round|int }}°C</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">High / Low</span>
+                <span class="detail-value">{{ temp_max|round|int }}° / {{ temp_min|round|int }}°C</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Humidity</span>
+                <span class="detail-value">{{ humidity }}%</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Wind</span>
+                <span class="detail-value">{{ windspeed }} m/s</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Pressure</span>
+                <span class="detail-value">{{ pressure }} hPa</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Coordinates</span>
+                <span class="detail-value">{{ latitude }}, {{ longitude }}</span>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</main>
 </body>
 </html>
